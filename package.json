@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://owtmpatrick.github.io/science/",
   "dependencies": {
+    "@material-ui/core": "^3.9.1",
     "gh-pages": "^1.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",

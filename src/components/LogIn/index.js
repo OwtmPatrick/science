@@ -1,12 +1,17 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import LogInComponent from "./LogIn";
 
-import LogInComponent from './LogIn';
+import { logIn, closeModal } from "../../actions";
 
 const mapStateToProps = state => ({
-    // token: state.token
+  token: state.auth.token,
+  modal: state.modalsController.AUTH_ERROR
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  logIn,
+  closeModal
+};
 
 export const LogIn = connect(
   mapStateToProps,
