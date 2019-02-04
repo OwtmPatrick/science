@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 // import { withRouter } from 'react-router-dom';
+import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   MuiThemeProvider,
   createMuiTheme,
@@ -9,7 +10,6 @@ import {
 import { indigo, yellow } from "@material-ui/core/colors";
 
 import { ArticleList, LogIn, Admin, AdminRouter } from "./components";
-import "./App.css";
 
 const theme = createMuiTheme({
   palette: {
@@ -27,6 +27,8 @@ const theme = createMuiTheme({
 
 const App = () => (
   <MuiThemeProvider theme={theme}>
+    <CssBaseline />
+
     <Route path="/" exact component={ArticleList} />
 
     <Route path="/admin/login" component={LogIn} />
