@@ -19,17 +19,17 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    maxWidth: 450,
+    float: 'right',
+    width: '100%',
+    maxWidth: 250,
     margin: 10,
     padding: 10,
-    "@media (min-width: 475px)": {
-      margin: "10px auto"
-    },
     "@media (min-width: 1300px)": {
       position: "absolute",
       right: 30,
       top: 20,
       flexDirection: "column",
+      width: 'auto',
       height: 110
     }
   },
