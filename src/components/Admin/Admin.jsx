@@ -1,8 +1,51 @@
-import React, { Component } from "react";
+import React from "react";
+import { Dialog, DialogTitle, DialogActions, Button } from "@material-ui/core";
 
-const AdminComponent = () => {
-  // console.log(articles);
-  return <div>i am admin</div>;
+import { LogOut } from "../Common";
+import { ArticleList } from "../ArticleList/index";
+
+import { CONFIRM_EXIT } from "../../constants";
+import { removeTokenFromStorage } from "../../utils";
+
+const AdminComponent = ({
+  history,
+  openModal,
+  closeModal,
+  modalConfirmExit
+}) => {
+  return (
+    <div>
+      <LogOut logOut={() => openModal(CONFIRM_EXIT)} />
+
+      <ArticleList admin />
+
+      <Dialog open={modalConfirmExit} onClose={() => closeModal(CONFIRM_EXIT)}>
+        <DialogTitle>Do you really want to leave?</DialogTitle>
+
+        <DialogActions>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              closeModal(CONFIRM_EXIT);
+              removeTokenFromStorage();
+              history.push("/admin/login");
+            }}
+          >
+            Yes
+          </Button>
+
+          <Button
+            variant="outlined"
+            onClick={() => {
+              closeModal(CONFIRM_EXIT);
+            }}
+          >
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 };
 
 export default AdminComponent;

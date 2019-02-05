@@ -1,12 +1,16 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import AdminComponent from './Admin';
+import AdminComponent from "./Admin";
+import { openModal, closeModal } from "../../actions";
 
 const mapStateToProps = state => ({
-//   articles: state.articles.articles
+  modalConfirmExit: state.modalsController.CONFIRM_EXIT
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  openModal,
+  closeModal
+};
 
 export const Admin = connect(
   mapStateToProps,

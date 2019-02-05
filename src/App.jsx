@@ -7,9 +7,15 @@ import {
   createMuiTheme,
   withStyles
 } from "@material-ui/core/styles";
-import { indigo, yellow } from "@material-ui/core/colors";
+import { indigo, yellow, red } from "@material-ui/core/colors";
 
-import { ArticleList, LogIn, Admin, AdminRouter } from "./components";
+import {
+  ArticleList,
+  LogIn,
+  Admin,
+  AdminRouter,
+  EditArticle
+} from "./components";
 
 const theme = createMuiTheme({
   palette: {
@@ -18,7 +24,8 @@ const theme = createMuiTheme({
       main: indigo[500],
       dark: indigo[900]
     },
-    secondary: { light: yellow[300], main: yellow[500], dark: yellow[700] }
+    secondary: { light: yellow[300], main: yellow[500], dark: yellow[700] },
+    error: { light: red[300], main: red[500], dark: red[700] }
   },
   typography: {
     useNextVariants: true
@@ -34,6 +41,8 @@ const App = () => (
     <Route path="/admin/login" component={LogIn} />
 
     <AdminRouter path="/admin" component={Admin} />
+
+    <Route path="/articles/:id" component={EditArticle} />
   </MuiThemeProvider>
 );
 

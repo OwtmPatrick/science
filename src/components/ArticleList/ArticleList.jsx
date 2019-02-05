@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { AppBar, Typography, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-import Filter from "./Filter";
-import Article from "./Article";
-import View from "./View";
+import { Filter, Article, View } from "../Common";
 
 import { FILTER1, FILTER2, FILTER3 } from "../../constants";
 
@@ -97,7 +95,7 @@ class ArticlesListComponent extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, admin } = this.props;
 
     let articles = this.state.viewAll
       ? this.filterArticles()
@@ -149,19 +147,21 @@ class ArticlesListComponent extends Component {
 
         <div className={classes.container}>
           <Typography className={classes.titleArticles} variant="h4">
-            Study materials
+            {admin ? "Articles" : "Study materials"}
           </Typography>
 
           <div className={classes.articlesList}>
-            {articles.map(function(el, i) {
+            {articles.map(el => {
               return (
                 <Article
-                  key={i}
+                  id={el.id}
+                  key={el.id}
                   image={el.image}
                   section={el.section}
                   title={el.title}
                   content={el.content}
                   video={el.video}
+                  admin={admin}
                 />
               );
             })}

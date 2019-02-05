@@ -47,10 +47,8 @@ const styles = theme => ({
   }
 });
 
-const Video = withStyles(styles)(VideoComponent);
+export const Video = withStyles(styles)(VideoComponent);
 
 Video.propTypes = {
   videoSrc: PropTypes.string.isRequired
 };
-
-export default Video;

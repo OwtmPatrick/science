@@ -3,7 +3,8 @@ import { Card, CardContent, Typography, Avatar } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import Video from "./Video";
+import { Video } from "./Video";
+import { ManageButtons } from "./ManageButtons";
 
 import images from "../../data/images";
 import play from "../../data/img/play.png";
@@ -29,7 +30,16 @@ class ArticleComponent extends Component {
   };
 
   render() {
-    const { classes, image, video, section, title, content } = this.props;
+    const {
+      classes,
+      id,
+      image,
+      video,
+      section,
+      title,
+      content,
+      admin
+    } = this.props;
 
     return (
       <Card className={classes.article}>
@@ -57,6 +67,8 @@ class ArticleComponent extends Component {
             <Video videoSrc={video} />
           </div>
         ) : null}
+
+        {admin ? <ManageButtons id={id} /> : null}
       </Card>
     );
   }
@@ -113,7 +125,7 @@ const styles = theme => ({
   }
 });
 
-const Article = withStyles(styles)(ArticleComponent);
+export const Article = withStyles(styles)(ArticleComponent);
 
 Article.propTypes = {
   image: PropTypes.string.isRequired,
@@ -121,5 +133,3 @@ Article.propTypes = {
   section: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired
 };
-
-export default Article;

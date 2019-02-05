@@ -77,7 +77,7 @@ class LoginComponent extends Component {
             style={styles.button}
             onClick={this.onLogin}
           >
-            Enter
+            Log in
           </Button>
         </Paper>
 

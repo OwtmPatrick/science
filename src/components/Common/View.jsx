@@ -42,10 +42,8 @@ const styles = theme => ({
   }
 });
 
-const View = withStyles(styles)(ViewComponent);
+export const View = withStyles(styles)(ViewComponent);
 
 View.propTypes = {
   updateView: PropTypes.func.isRequired
 };
-
-export default View;
