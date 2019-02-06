@@ -1,3 +1,3 @@
 import { createAction } from "redux-actions";
 
-export const setArticles = createAction('SET_ARTICLES');
+export const editArticle = createAction('EDIT_ARTICLE');

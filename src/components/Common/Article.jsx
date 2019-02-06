@@ -25,8 +25,10 @@ class ArticleComponent extends Component {
 
   getImage = url => {
     let index = url[11];
-    if (typeof index !== "undefined") return images[Number(index)];
-    return images[0];
+    // if (typeof index !== "undefined") return images[Number(index)];
+    // return images[0];
+    // if ()
+    return images[Number(index)];
   };
 
   render() {

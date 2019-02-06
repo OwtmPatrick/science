@@ -101,6 +101,10 @@ class ArticlesListComponent extends Component {
       ? this.filterArticles()
       : this.filterArticles().slice(0, 3);
 
+    // console.log(articles[1]);
+    const noImages = this.props.articles.filter(el => el.image === "");
+    console.log(noImages);
+
     return (
       <div>
         <AppBar position="static" color="default" className={classes.appBar}>

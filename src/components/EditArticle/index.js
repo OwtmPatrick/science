@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import EditArticleComponent from "./EditArticle";
-// import { openModal, closeModal } from "../../actions";
+import { editArticle } from "../../actions";
 
 const mapStateToProps = state => ({
   articles: state.articles.articles
@@ -9,8 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  //   openModal,
-  //   closeModal
+  editArticle
 };
 
 export const EditArticle = connect(

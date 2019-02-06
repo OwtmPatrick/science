@@ -11,9 +11,10 @@ import {
   Button
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import { FILTER1, FILTER2, FILTER3 } from "../../constants";
+// import { generateID } from "../../utils";
 import images from "../../data/images";
 
 class EditArticle extends Component {
@@ -32,9 +33,16 @@ class EditArticle extends Component {
 
   componentDidMount() {
     const article = this.getArticle();
+
     if (article) {
       const { section, speciality, audience, title, content, image } = article;
-      this.setState({ section, speciality, audience, title, content, image });
+
+      this.setState({ section, speciality, audience, title, content });
+
+      const index = image[11];
+      if (typeof index !== "undefined") {
+        this.setState({ image: images[Number(index)] });
+      } else this.setState({ image: images[0] });
     }
   }
 
@@ -48,10 +56,14 @@ class EditArticle extends Component {
     return false;
   };
 
-  getImage = url => {
-    let index = url[11];
-    if (typeof index !== "undefined") return images[Number(index)];
-    return images[0];
+  onImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = e => {
+        this.setState({ image: e.target.result });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   };
 
   handleChange = name => event => {
@@ -60,11 +72,37 @@ class EditArticle extends Component {
     });
   };
 
+  saveArticle = () => {
+    const { section, speciality, audience, title, content, image } = this.state;
+    const article = this.getArticle();
+
+    const articleIndex = this.props.articles.findIndex(
+      el => el.id === article.id
+    );
+
+    const newArticle = {
+      id: article.id,
+      section,
+      speciality,
+      audience,
+      title,
+      content,
+      image
+    };
+
+    const articles = this.props.articles;
+
+    articles.splice(articleIndex, 1, newArticle);
+    // console.log(article);
+    this.props.editArticle(articles);
+    this.props.history.push("/admin");
+  };
+
   render() {
     const { classes } = this.props;
-    console.log(this.state.section);
+    // console.log(this.state.image);
 
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <Paper className={classes.paper}>
         <div className={classes.container}>
@@ -140,36 +178,23 @@ class EditArticle extends Component {
 
           <div className={classes.imageContainer}>
             <img
-              ref={ref => {
-                this.img = ref;
-              }}
-              src={this.getImage(this.state.image)}
+              // ref={ref => {
+              //   this.img = ref;
+              // }}
+              src={this.state.image}
               alt=""
               className={classes.articleImage}
             />
 
             <input
-              ref={ref => {
-                this.file = ref;
-              }}
+              // ref={ref => {
+              //   this.file = ref;
+              // }}
               accept="image/*"
               className={classes.input}
               id="button-file"
               type="file"
-              onChange={() => {
-                const reader = new FileReader();
-
-                reader.onloadend = function() {
-                  console.log("ewgew");
-                  this.img.src = reader.result;
-                };
-                // how-to-display-a-image-selected-from-input-type-file-in-reactjs
-                console.log(reader);
-
-                // if (this.file) {
-                //   reader.readAsDataURL(this.file);
-                // }
-              }}
+              onChange={this.onImageChange}
             />
             <label htmlFor="button-file">
               <Button variant="outlined" component="span" color="primary">
@@ -199,7 +224,12 @@ class EditArticle extends Component {
           />
 
           <div className={classes.buttons}>
-            <Button variant="outlined" color="primary">
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.buttonSave}
+              onClick={this.saveArticle}
+            >
               save
             </Button>
 
@@ -221,7 +251,12 @@ class EditArticle extends Component {
 
 const styles = theme => ({
   paper: {
-    margin: 10
+    margin: 10,
+    maxWidth: 520,
+    "@media (min-width: 545px)": {
+      margin: "10px auto",
+      marginTop: 50
+    }
   },
   container: {
     display: "flex",
@@ -253,6 +288,12 @@ const styles = theme => ({
   select: {
     marginBottom: 20,
     color: theme.palette.primary.dark
+  },
+  buttons: {
+    padding: "15px 0"
+  },
+  buttonSave: {
+    marginRight: 15
   }
 });
 

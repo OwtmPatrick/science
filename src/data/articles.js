@@ -1,7 +1,7 @@
 const ARTICLES =[
     {
         title:"Polymeric Materials for Articulating Motion Preservation Devices",
-        image:"",
+        image:"img/science0.jpg",
         content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         speciality:"Spine",
         section:"Abstract summary",
