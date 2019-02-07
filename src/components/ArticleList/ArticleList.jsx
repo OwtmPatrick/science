@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AppBar, Typography, TextField } from "@material-ui/core";
+import { AppBar, Typography, TextField, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import { Filter, Article, View } from "../Common";
@@ -101,10 +101,6 @@ class ArticlesListComponent extends Component {
       ? this.filterArticles()
       : this.filterArticles().slice(0, 3);
 
-    // console.log(articles[1]);
-    const noImages = this.props.articles.filter(el => el.image === "");
-    console.log(noImages);
-
     return (
       <div>
         <AppBar position="static" color="default" className={classes.appBar}>
@@ -150,9 +146,25 @@ class ArticlesListComponent extends Component {
         </AppBar>
 
         <div className={classes.container}>
-          <Typography className={classes.titleArticles} variant="h4">
-            {admin ? "Articles" : "Study materials"}
-          </Typography>
+          {admin ? (
+            <div className={classes.containerTitle}>
+              <Typography className={classes.titleArticles} variant="h4">
+                Articles
+              </Typography>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={this.addArticle}
+              >
+                Add new article
+              </Button>
+            </div>
+          ) : (
+            <Typography className={classes.titleArticles} variant="h4">
+              Study materials
+            </Typography>
+          )}
 
           <div className={classes.articlesList}>
             {articles.map(el => {
@@ -225,6 +237,9 @@ const styles = theme => ({
     "@media (min-width: 1024px)": {
       maxWidth: 670
     }
+  },
+  containerTitle: {
+    display: "flex"
   },
   titleArticles: {
     margin: "20px 0",

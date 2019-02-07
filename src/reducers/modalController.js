@@ -5,12 +5,16 @@ import {
   // auth
   AUTH_ERROR,
   CONFIRM_EXIT,
+  // articles
+  CONFIRM_DELETE_ARTICLE
 } from "../constants";
 
 const initialState = {
   // auth
   [AUTH_ERROR]: false,
   [CONFIRM_EXIT]: false,
+  // articles
+  [CONFIRM_DELETE_ARTICLE]: false,
   data: {}
 };
 

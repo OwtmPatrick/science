@@ -1,15 +1,23 @@
 import { connect } from "react-redux";
 
 import EditArticleComponent from "./EditArticle";
-import { editArticle } from "../../actions";
+import {
+  editArticle,
+  deleteArticle,
+  openModal,
+  closeModal
+} from "../../actions";
 
 const mapStateToProps = state => ({
-  articles: state.articles.articles
-  //   modalConfirmExit: state.modalsControl.CONFIRM_EXIT
+  articles: state.articles.articles,
+  modalConfirmDeleteArticle: state.modalsController.CONFIRM_DELETE_ARTICLE
 });
 
 const mapDispatchToProps = {
-  editArticle
+  editArticle,
+  deleteArticle,
+  openModal,
+  closeModal
 };
 
 export const EditArticle = connect(

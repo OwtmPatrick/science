@@ -106,11 +106,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    maxWidth: 350,
-    margin: 10,
-    marginRight: "auto",
-    marginLeft: "auto",
-    marginTop: 300,
+    maxWidth: 310,
+    margin: "300px auto 10px",
     padding: 30
   },
   button: {

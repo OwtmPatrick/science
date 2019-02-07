@@ -1,10 +1,16 @@
 import React, { Component } from "react";
-import { Card, CardContent, Typography, Avatar } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+  Button
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { Video } from "./Video";
-import { ManageButtons } from "./ManageButtons";
+import { Video } from ".";
 
 import images from "../../data/images";
 import play from "../../data/img/play.png";
@@ -17,7 +23,7 @@ class ArticleComponent extends Component {
     };
   }
 
-  setVideoOpen = event => {
+  setVideoOpen = () => {
     this.setState({
       videoOpen: !this.state.videoOpen
     });
@@ -25,9 +31,9 @@ class ArticleComponent extends Component {
 
   getImage = url => {
     let index = url[11];
-    // if (typeof index !== "undefined") return images[Number(index)];
-    // return images[0];
-    // if ()
+    if (url.length > 16) {
+      return url;
+    }
     return images[Number(index)];
   };
 
@@ -49,8 +55,6 @@ class ArticleComponent extends Component {
           <img
             className={video ? classes.articleVideo : classes.articleImage}
             src={this.getImage(image)}
-            width="900"
-            height="600"
             alt=""
           />
           {video ? <Avatar className={classes.play} src={play} /> : null}
@@ -70,7 +74,13 @@ class ArticleComponent extends Component {
           </div>
         ) : null}
 
-        {admin ? <ManageButtons id={id} /> : null}
+        {admin ? (
+          <Link to={`/articles/${id}`} style={{ textDecoration: "none" }}>
+            <Button color="primary" variant="outlined">
+              Edit
+            </Button>
+          </Link>
+        ) : null}
       </Card>
     );
   }
@@ -125,6 +135,16 @@ const styles = theme => ({
     fontSize: 14,
     color: "#44484e"
   }
+  // manageButtons: {
+  //   display: "flex",
+  //   justifyContent: "flex-end",
+  //   padding: 10
+  // },
+  // buttonDelete: {
+  //   marginLeft: 15,
+  //   color: theme.palette.error.main,
+  //   borderColor: theme.palette.error.main
+  // }
 });
 
 export const Article = withStyles(styles)(ArticleComponent);

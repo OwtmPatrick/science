@@ -8,12 +8,19 @@ import {
   OutlinedInput,
   MenuItem,
   TextField,
-  Button
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-// import { Link } from "react-router-dom";
 
-import { FILTER1, FILTER2, FILTER3 } from "../../constants";
+import {
+  FILTER1,
+  FILTER2,
+  FILTER3,
+  CONFIRM_DELETE_ARTICLE
+} from "../../constants";
 // import { generateID } from "../../utils";
 import images from "../../data/images";
 
@@ -37,12 +44,14 @@ class EditArticle extends Component {
     if (article) {
       const { section, speciality, audience, title, content, image } = article;
 
-      this.setState({ section, speciality, audience, title, content });
-
-      const index = image[11];
-      if (typeof index !== "undefined") {
-        this.setState({ image: images[Number(index)] });
-      } else this.setState({ image: images[0] });
+      this.setState({
+        section,
+        speciality,
+        audience,
+        title,
+        content,
+        image: images[Number(image[11])]
+      });
     }
   }
 
@@ -76,10 +85,6 @@ class EditArticle extends Component {
     const { section, speciality, audience, title, content, image } = this.state;
     const article = this.getArticle();
 
-    const articleIndex = this.props.articles.findIndex(
-      el => el.id === article.id
-    );
-
     const newArticle = {
       id: article.id,
       section,
@@ -90,19 +95,30 @@ class EditArticle extends Component {
       image
     };
 
-    const articles = this.props.articles;
+    this.props.editArticle(newArticle);
+    this.props.history.push("/admin");
+  };
 
-    articles.splice(articleIndex, 1, newArticle);
-    // console.log(article);
-    this.props.editArticle(articles);
+  deleteArticle = () => {
+    const article = this.getArticle();
+
+    const articleIndex = this.props.articles.findIndex(
+      el => el.id === article.id
+    );
+
+    this.props.deleteArticle(articleIndex);
+    this.props.closeModal(CONFIRM_DELETE_ARTICLE);
     this.props.history.push("/admin");
   };
 
   render() {
-    const { classes } = this.props;
-    // console.log(this.state.image);
+    const {
+      classes,
+      modalConfirmDeleteArticle,
+      openModal,
+      closeModal
+    } = this.props;
 
-    // console.log(this.props);
     return (
       <Paper className={classes.paper}>
         <div className={classes.container}>
@@ -178,18 +194,12 @@ class EditArticle extends Component {
 
           <div className={classes.imageContainer}>
             <img
-              // ref={ref => {
-              //   this.img = ref;
-              // }}
               src={this.state.image}
               alt=""
               className={classes.articleImage}
             />
 
             <input
-              // ref={ref => {
-              //   this.file = ref;
-              // }}
               accept="image/*"
               className={classes.input}
               id="button-file"
@@ -230,20 +240,48 @@ class EditArticle extends Component {
               className={classes.buttonSave}
               onClick={this.saveArticle}
             >
-              save
+              Save
             </Button>
 
-            {/* <Link to="/admin"> */}
+            <Button
+              variant="outlined"
+              className={classes.buttonDelete}
+              onClick={() => openModal(CONFIRM_DELETE_ARTICLE)}
+            >
+              Delete
+            </Button>
+
             <Button
               variant="outlined"
               color="primary"
               onClick={this.props.history.goBack}
             >
-              go back
+              Go back
             </Button>
-            {/* </Link> */}
           </div>
         </div>
+
+        <Dialog
+          open={modalConfirmDeleteArticle}
+          onClose={() => closeModal(CONFIRM_DELETE_ARTICLE)}
+        >
+          <DialogTitle>Do you really want to delete this article?</DialogTitle>
+
+          <DialogActions>
+            <Button variant="outlined" onClick={this.deleteArticle}>
+              Yes
+            </Button>
+
+            <Button
+              variant="outlined"
+              onClick={() => {
+                closeModal(CONFIRM_DELETE_ARTICLE);
+              }}
+            >
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
     );
   }
@@ -294,6 +332,11 @@ const styles = theme => ({
   },
   buttonSave: {
     marginRight: 15
+  },
+  buttonDelete: {
+    marginLeft: 15,
+    color: theme.palette.error.main,
+    borderColor: theme.palette.error.main
   }
 });
 
