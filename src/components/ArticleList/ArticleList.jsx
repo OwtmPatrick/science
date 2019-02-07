@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { AppBar, Typography, TextField, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 import { Filter, Article, View } from "../Common";
 
 import { FILTER1, FILTER2, FILTER3 } from "../../constants";
+import { generateID } from "../../utils";
 
 class ArticlesListComponent extends Component {
   constructor(props) {
@@ -101,6 +103,8 @@ class ArticlesListComponent extends Component {
       ? this.filterArticles()
       : this.filterArticles().slice(0, 3);
 
+    const newArticleId = generateID();
+
     return (
       <div>
         <AppBar position="static" color="default" className={classes.appBar}>
@@ -152,12 +156,13 @@ class ArticlesListComponent extends Component {
                 Articles
               </Typography>
 
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={this.addArticle}
-              >
-                Add new article
+              <Button variant="outlined" color="primary">
+                <Link
+                  to={`/articles/${newArticleId}/:new`}
+                  style={{ textDecoration: "none" }}
+                >
+                  Add new article
+                </Link>
               </Button>
             </div>
           ) : (

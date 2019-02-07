@@ -42,7 +42,7 @@ const App = () => (
 
     <AdminRouter path="/admin" component={Admin} />
 
-    <Route path="/articles/:id" component={EditArticle} />
+    <Route path="/articles/:id/:param?" component={EditArticle} />
   </MuiThemeProvider>
 );
 

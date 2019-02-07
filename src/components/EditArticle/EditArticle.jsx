@@ -118,6 +118,7 @@ class EditArticle extends Component {
       openModal,
       closeModal
     } = this.props;
+    console.log(this.props.match.params);
 
     return (
       <Paper className={classes.paper}>
