@@ -21,7 +21,9 @@ import {
   FILTER3,
   CONFIRM_DELETE_ARTICLE
 } from "../../constants";
-// import { generateID } from "../../utils";
+
+import { generateID } from "../../utils";
+
 import images from "../../data/images";
 
 class EditArticle extends Component {
@@ -34,7 +36,12 @@ class EditArticle extends Component {
       title: "",
       content: "",
       video: "",
-      image: ""
+      image: "",
+      sectionError: false,
+      specialityError: false,
+      audienceError: false,
+      titleError: false,
+      contentError: false
     };
   }
 
@@ -81,6 +88,44 @@ class EditArticle extends Component {
     });
   };
 
+  addArticle = () => {
+    const { section, speciality, audience, title, content, image } = this.state;
+
+    const id = generateID();
+
+    const newArticle = {
+      id,
+      section,
+      speciality,
+      audience,
+      title,
+      content,
+      image
+    };
+
+    if (!section) {
+      this.setState({ sectionError: true });
+    }
+
+    if (!speciality) {
+      this.setState({ specialityError: true });
+    }
+
+    if (!audience) {
+      this.setState({ audienceError: true });
+    }
+    if (!title) {
+      this.setState({ titleError: true });
+    }
+    if (!content) {
+      this.setState({ contentError: true });
+    } else {
+      this.props.addArticle(newArticle);
+      this.props.history.push("/admin");
+    }
+    // console.log(id);
+  };
+
   saveArticle = () => {
     const { section, speciality, audience, title, content, image } = this.state;
     const article = this.getArticle();
@@ -118,7 +163,8 @@ class EditArticle extends Component {
       openModal,
       closeModal
     } = this.props;
-    console.log(this.props.match.params);
+
+    const isNew = this.props.match.params.param === "new";
 
     return (
       <Paper className={classes.paper}>
@@ -132,6 +178,8 @@ class EditArticle extends Component {
             <Select
               value={this.state.speciality}
               onChange={this.handleChange("speciality")}
+              error={this.state.specialityError}
+              onFocus={() => this.setState({ specialityError: false })}
               input={
                 <OutlinedInput
                   labelWidth={70}
@@ -154,6 +202,8 @@ class EditArticle extends Component {
             <Select
               value={this.state.section}
               onChange={this.handleChange("section")}
+              error={this.state.sectionError}
+              onFocus={() => this.setState({ sectionError: false })}
               input={
                 <OutlinedInput
                   labelWidth={55}
@@ -176,6 +226,8 @@ class EditArticle extends Component {
             <Select
               value={this.state.audience}
               onChange={this.handleChange("audience")}
+              error={this.state.audienceError}
+              onFocus={() => this.setState({ audienceError: false })}
               input={
                 <OutlinedInput
                   labelWidth={70}
@@ -222,16 +274,20 @@ class EditArticle extends Component {
             variant="outlined"
             multiline
             margin="normal"
+            error={this.state.titleError}
+            onFocus={() => this.setState({ titleError: false })}
           />
 
           <TextField
-            label="Title"
+            label="Content"
             name="title"
             value={this.state.content}
             onChange={this.handleChange("content")}
             variant="outlined"
             multiline
             margin="normal"
+            error={this.state.contentError}
+            onFocus={() => this.setState({ contentError: false })}
           />
 
           <div className={classes.buttons}>
@@ -239,18 +295,20 @@ class EditArticle extends Component {
               variant="outlined"
               color="primary"
               className={classes.buttonSave}
-              onClick={this.saveArticle}
+              onClick={isNew ? this.addArticle : this.saveArticle}
             >
-              Save
+              {isNew ? "Add" : "Save"}
             </Button>
 
-            <Button
-              variant="outlined"
-              className={classes.buttonDelete}
-              onClick={() => openModal(CONFIRM_DELETE_ARTICLE)}
-            >
-              Delete
-            </Button>
+            {isNew ? null : (
+              <Button
+                variant="outlined"
+                className={classes.buttonDelete}
+                onClick={() => openModal(CONFIRM_DELETE_ARTICLE)}
+              >
+                Delete
+              </Button>
+            )}
 
             <Button
               variant="outlined"
@@ -266,7 +324,9 @@ class EditArticle extends Component {
           open={modalConfirmDeleteArticle}
           onClose={() => closeModal(CONFIRM_DELETE_ARTICLE)}
         >
-          <DialogTitle>Do you really want to delete this article?</DialogTitle>
+          <DialogTitle>
+            Are you sure you want to delete this article?
+          </DialogTitle>
 
           <DialogActions>
             <Button variant="outlined" onClick={this.deleteArticle}>
@@ -329,13 +389,13 @@ const styles = theme => ({
     color: theme.palette.primary.dark
   },
   buttons: {
-    padding: "15px 0"
+    margin: "15px 0"
   },
   buttonSave: {
-    marginRight: 15
+    marginRight: 7
   },
   buttonDelete: {
-    marginLeft: 15,
+    marginRight: 7,
     color: theme.palette.error.main,
     borderColor: theme.palette.error.main
   }

@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 
 import EditArticleComponent from "./EditArticle";
 import {
+  addArticle,
   editArticle,
   deleteArticle,
   openModal,
@@ -14,6 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  addArticle,
   editArticle,
   deleteArticle,
   openModal,

@@ -50,7 +50,7 @@ class ArticleComponent extends Component {
     } = this.props;
 
     return (
-      <Card className={classes.article}>
+      <Card className={admin ? classes.arcticleAdmin : classes.article}>
         <div onClick={this.setVideoOpen} className={classes.imageContainer}>
           <img
             className={video ? classes.articleVideo : classes.articleImage}
@@ -76,7 +76,11 @@ class ArticleComponent extends Component {
 
         {admin ? (
           <Link to={`/articles/${id}`} style={{ textDecoration: "none" }}>
-            <Button color="primary" variant="outlined">
+            <Button
+              color="primary"
+              variant="outlined"
+              className={classes.buttonEdit}
+            >
               Edit
             </Button>
           </Link>
@@ -93,6 +97,15 @@ const styles = theme => ({
     flexBasis: "31%",
     flex: "1 1 calc(30% - 7.5px)",
     flexDirection: "column"
+  },
+  arcticleAdmin: {
+    display: "flex",
+    margin: "20px 10px 0",
+    flexBasis: "31%",
+    flex: "1 1 calc(30% - 7.5px)",
+    flexDirection: "column",
+    position: "relative",
+    paddingBottom: 30
   },
   imageContainer: {
     position: "relative"
@@ -134,17 +147,13 @@ const styles = theme => ({
   articleContent: {
     fontSize: 14,
     color: "#44484e"
+  },
+  buttonEdit: {
+    // margin: 15
+    position: "absolute",
+    left: 15,
+    bottom: 15
   }
-  // manageButtons: {
-  //   display: "flex",
-  //   justifyContent: "flex-end",
-  //   padding: 10
-  // },
-  // buttonDelete: {
-  //   marginLeft: 15,
-  //   color: theme.palette.error.main,
-  //   borderColor: theme.palette.error.main
-  // }
 });
 
 export const Article = withStyles(styles)(ArticleComponent);

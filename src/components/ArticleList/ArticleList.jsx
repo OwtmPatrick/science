@@ -156,14 +156,18 @@ class ArticlesListComponent extends Component {
                 Articles
               </Typography>
 
-              <Button variant="outlined" color="primary">
-                <Link
-                  to={`/articles/${newArticleId}/:new`}
-                  style={{ textDecoration: "none" }}
+              <Link
+                to={`/articles/${newArticleId}/new`}
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.buttonAdd}
                 >
                   Add new article
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           ) : (
             <Typography className={classes.titleArticles} variant="h4">
@@ -244,11 +248,19 @@ const styles = theme => ({
     }
   },
   containerTitle: {
-    display: "flex"
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    "@media (min-width: 768px)": {
+      flexDirection: "row"
+    }
   },
   titleArticles: {
     margin: "20px 0",
     color: theme.palette.primary.dark
+  },
+  buttonAdd: {
+    marginLeft: 15
   },
   articlesList: {
     width: "100%",
