@@ -3,7 +3,7 @@ import { AppBar, Typography, TextField, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
-import { Filter, Article, View } from "../Common";
+import { Filter, Article, Pagination } from "../Common";
 
 import { FILTER1, FILTER2, FILTER3 } from "../../constants";
 import { generateID } from "../../utils";
@@ -17,7 +17,8 @@ class ArticlesListComponent extends Component {
       filterSpeciality: FILTER1[0].toLowerCase(),
       filterSection: FILTER2[0].toLowerCase(),
       filterAudience: FILTER3[0].toLowerCase(),
-      viewAll: false
+      articlesPerPage: 3,
+      page: 1
     };
   }
 
@@ -98,12 +99,13 @@ class ArticlesListComponent extends Component {
 
   render() {
     const { classes, admin } = this.props;
-
-    let articles = this.state.viewAll
-      ? this.filterArticles()
-      : this.filterArticles().slice(0, 3);
+    const { page, articlesPerPage } = this.state;
 
     const newArticleId = generateID();
+
+    const indexOfLastOrder = page * articlesPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - articlesPerPage;
+    const currentArticles = this.filterArticles().slice(indexOfFirstOrder, indexOfLastOrder);
 
     return (
       <div>
@@ -176,7 +178,7 @@ class ArticlesListComponent extends Component {
           )}
 
           <div className={classes.articlesList}>
-            {articles.map(el => {
+            {currentArticles.map(el => {
               return (
                 <Article
                   id={el.id}
@@ -192,7 +194,13 @@ class ArticlesListComponent extends Component {
             })}
           </div>
 
-          <View updateView={this.setViewAll} />
+          <Pagination  
+            articles={this.filterArticles()}
+            articlesPerPage={articlesPerPage}
+            page={page}
+            setPage={page => this.setState({ page })}
+            onChangeArticlesPerPage={e => this.setState({ articlesPerPage: e.target.value })}
+          />
         </div>
       </div>
     );

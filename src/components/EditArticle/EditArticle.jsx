@@ -45,7 +45,7 @@ class EditArticle extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const article = this.getArticle();
 
     if (article) {
@@ -57,8 +57,11 @@ class EditArticle extends Component {
         audience,
         title,
         content,
-        image: images[Number(image[11])]
       });
+
+      if(image.length > 16) {
+        this.setState({ image })
+      } else this.setState({ image: images[Number(image[11])] })
     }
   }
 
@@ -123,7 +126,6 @@ class EditArticle extends Component {
       this.props.addArticle(newArticle);
       this.props.history.push("/admin");
     }
-    // console.log(id);
   };
 
   saveArticle = () => {
@@ -166,11 +168,13 @@ class EditArticle extends Component {
 
     const isNew = this.props.match.params.param === "new";
 
+    console.log(this.state.image)
+
     return (
       <Paper className={classes.paper}>
         <div className={classes.container}>
           <Typography variant="h4" color="primary" className={classes.title}>
-            Edit article
+            {isNew ? 'Add article' : 'Edit article'}
           </Typography>
 
           <FormControl variant="outlined">
