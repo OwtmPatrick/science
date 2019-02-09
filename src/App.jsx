@@ -36,7 +36,7 @@ const App = () => (
 
     <Route path="/admin/login" component={LogIn} />
 
-    <AdminRouter path="/admin/" exact component={Admin} />
+    <AdminRouter path="/admin" component={Admin} />
 
     <Route path="/articles/:id/:param?" component={EditArticle} />
   </MuiThemeProvider>
