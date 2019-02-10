@@ -3,3 +3,4 @@ export * from './LogIn';
 export * from './Admin';
 export * from './EditArticle';
 export * from './AdminRouter/AdminRouter';
+export * from './LoginRouter/LoginRouter';

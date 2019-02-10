@@ -12,6 +12,7 @@ import {
   LogIn,
   Admin,
   AdminRouter,
+  LoginRouter,
   EditArticle
 } from "./components";
 
@@ -34,7 +35,7 @@ const App = () => (
 
     <Route path="/" exact component={ArticleList} />
 
-    <Route path="/admin/login" component={LogIn} />
+    <LoginRouter path="/admin/login" component={LogIn} />
 
     <AdminRouter path="/admin" component={Admin} />
 
