@@ -1,5 +1,6 @@
 import React from "react";
 import { Dialog, DialogTitle, DialogActions, Button } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 import { LogOut } from "../Common";
 import { ArticleList } from "../ArticleList/index";
@@ -46,6 +47,14 @@ const AdminComponent = ({
       </Dialog>
     </div>
   );
+};
+
+AdminComponent.propTypes = {
+  history: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  modalConfirmExit: PropTypes.bool.isRequired,
+  logOut: PropTypes.func.isRequired,
 };
 
 export default AdminComponent;

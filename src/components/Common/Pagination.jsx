@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { KeyboardArrowLeft ,KeyboardArrowRight } from '@material-ui/icons';
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 import { ARTICLES_PER_PAGE } from "../../constants";
 
@@ -139,5 +140,14 @@ const styles = theme => ({
     marginLeft: -7
   }
 });
+
+PagiantionComponent.propTypes = {
+  articles: PropTypes.array.isRequired,
+  articlesPerPage: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  onChangeArticlesPerPage: PropTypes.func.isRequired,
+  setPage: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+};
 
 export const Pagination = withStyles(styles)(PagiantionComponent);

@@ -46,9 +46,11 @@ const styles = theme => ({
   }
 });
 
-export const Filter = withStyles(styles)(FilterComponent);
-
-Filter.propTypes = {
+FilterComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  value: PropTypes.string.isRequired,
   filterName: PropTypes.func.isRequired,
   filterData: PropTypes.array.isRequired
 };
+
+export const Filter = withStyles(styles)(FilterComponent);

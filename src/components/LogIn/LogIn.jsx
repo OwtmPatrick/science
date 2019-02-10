@@ -7,10 +7,12 @@ import {
   DialogTitle,
   DialogActions
 } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 import { AUTH_ERROR } from "../../constants";
 
-class LoginComponent extends Component {
+class LogIn extends Component {
   state = {
     login: "",
     password: "",
@@ -43,9 +45,11 @@ class LoginComponent extends Component {
   };
 
   render() {
+  const { classes } = this.props;
+
     return (
       <React.Fragment>
-        <Paper style={styles.paper}>
+        <Paper className={classes.paper}>
           <TextField
             label="Name"
             name="login"
@@ -74,7 +78,7 @@ class LoginComponent extends Component {
           <Button
             color="primary"
             variant="outlined"
-            style={styles.button}
+            className={classes.button}
             onClick={this.onLogin}
           >
             Log in
@@ -82,7 +86,7 @@ class LoginComponent extends Component {
         </Paper>
 
         <Dialog
-          open={this.props.modal}
+          open={this.props.modalAuthError}
           onClose={() => this.props.closeModal(AUTH_ERROR)}
         >
           <DialogTitle>Invalid username or password</DialogTitle>
@@ -115,5 +119,15 @@ const styles = {
     marginTop: 15
   }
 };
+
+LogIn.propTypes = {
+  classes: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  modalAuthError: PropTypes.bool.isRequired,
+  logIn: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};
+
+const LoginComponent = withStyles(styles)(LogIn)
 
 export default LoginComponent;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Paper, Typography, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 const LogOutComponent = ({ logOut, classes }) => {
   return (
@@ -38,5 +39,10 @@ const styles = theme => ({
     fontSize: 20
   }
 });
+
+LogOutComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  logOut: PropTypes.func.isRequired,
+};
 
 export const LogOut = withStyles(styles)(LogOutComponent);

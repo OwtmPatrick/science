@@ -14,6 +14,7 @@ import {
   DialogActions
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from 'prop-types';
 
 import {
   FILTER1,
@@ -167,8 +168,6 @@ class EditArticle extends Component {
     } = this.props;
 
     const isNew = this.props.match.params.param === "new";
-
-    console.log(this.state.image)
 
     return (
       <Paper className={classes.paper}>
@@ -404,6 +403,18 @@ const styles = theme => ({
     borderColor: theme.palette.error.main
   }
 });
+
+EditArticle.propTypes = {
+  classes: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  articles: PropTypes.array.isRequired,
+  modalConfirmDeleteArticle: PropTypes.bool.isRequired,
+  addArticle: PropTypes.func.isRequired,
+  editArticle: PropTypes.func.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};
 
 const EditArticleComponent = withStyles(styles)(EditArticle);
 

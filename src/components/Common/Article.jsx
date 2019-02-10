@@ -149,18 +149,22 @@ const styles = theme => ({
     color: "#44484e"
   },
   buttonEdit: {
-    // margin: 15
     position: "absolute",
     left: 15,
     bottom: 15
   }
 });
 
-export const Article = withStyles(styles)(ArticleComponent);
-
-Article.propTypes = {
+ArticleComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   section: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  admin: PropTypes.bool.isRequired
 };
+
+export const Article = withStyles(styles)(ArticleComponent);
+
+

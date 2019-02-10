@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { getTokenFromStorage } from "../../utils";
 
@@ -13,4 +14,8 @@ export const LoginRouter = ({ component: Component, ...rest }) => {
       }
     />
   );
+};
+
+LoginRouter.propTypes = {
+  component: PropTypes.func.isRequired,
 };

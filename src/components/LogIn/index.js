@@ -5,7 +5,7 @@ import { logIn, closeModal } from "../../actions";
 
 const mapStateToProps = state => ({
   token: state.auth.token,
-  modal: state.modalsController.AUTH_ERROR
+  modalAuthError: state.modalsController.AUTH_ERROR
 });
 
 const mapDispatchToProps = {

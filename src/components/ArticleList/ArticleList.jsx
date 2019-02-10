@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AppBar, Typography, TextField, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 import { Filter, Article, Pagination } from "../Common";
 
@@ -280,6 +281,11 @@ const styles = theme => ({
     }
   }
 });
+
+ArticlesListComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  admin: PropTypes.bool.isRequired,
+};
 
 const ArticleList = withStyles(styles)(ArticlesListComponent);
 
