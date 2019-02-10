@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import AdminComponent from "./Admin";
-import { openModal, closeModal } from "../../actions";
+import { openModal, closeModal, logOut } from "../../actions";
 
 const mapStateToProps = state => ({
   modalConfirmExit: state.modalsController.CONFIRM_EXIT
@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   openModal,
-  closeModal
+  closeModal,
+  logOut
 };
 
 export const Admin = connect(

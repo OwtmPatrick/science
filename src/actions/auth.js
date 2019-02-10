@@ -1,26 +1,26 @@
 import { createAction } from "redux-actions";
-import { fetchLogIn } from "../networkers";
 import { openModal } from "./modalController";
 
-import { setTokenToStorage } from "../utils";
+import { setTokenToStorage, removeTokenFromStorage, generateToken } from "../utils";
 import { AUTH_ERROR } from "../constants";
 
-export const logInRequest = createAction("FETCH_LOGIN_REQUEST");
-export const logInSuccess = createAction("FETCH_LOGIN_SUCCESS");
-export const logInFailed = createAction("FETCH_LOGIN_FAILED");
+export const logInSuccess = createAction("LOGIN_SUCCESS");
+export const logOutSuccess = createAction("LOGOUT_SUCCESS");
 
-export const logIn = (login, password) => async dispatch => {
-  dispatch(logInRequest());
-  try {
-    const response = await fetchLogIn(login, password);
+export const logIn = (login, password) => dispatch => {
+  if (login === 'admin' && password === 'qweqwe123') {
 
-    setTokenToStorage(response.token);
-    dispatch(logInSuccess(response.token));
-  } catch (e) {
-    if (e.status === 1) {
-      dispatch(logInFailed(e.message));
+    const token = generateToken(32);
 
-      dispatch(openModal(AUTH_ERROR));
-    }
+    setTokenToStorage(token);
+    dispatch(logInSuccess(token));
+  } else {
+    dispatch(openModal(AUTH_ERROR));
   }
-};
+}
+
+export const logOut = () => dispatch => {
+  removeTokenFromStorage();
+
+  dispatch(logOutSuccess());
+}

@@ -107,7 +107,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     maxWidth: 310,
-    margin: "300px auto 10px",
+    margin: "150px auto 10px",
     padding: 30
   },
   button: {

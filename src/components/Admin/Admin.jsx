@@ -5,13 +5,13 @@ import { LogOut } from "../Common";
 import { ArticleList } from "../ArticleList/index";
 
 import { CONFIRM_EXIT } from "../../constants";
-import { removeTokenFromStorage } from "../../utils";
 
 const AdminComponent = ({
   history,
   openModal,
   closeModal,
-  modalConfirmExit
+  modalConfirmExit,
+  logOut
 }) => {
   return (
     <div>
@@ -25,9 +25,9 @@ const AdminComponent = ({
         <DialogActions>
           <Button
             variant="outlined"
-            onClick={() => {
+            onClick={async () => {
               closeModal(CONFIRM_EXIT);
-              removeTokenFromStorage();
+              await logOut();
               history.push("/admin/login");
             }}
           >

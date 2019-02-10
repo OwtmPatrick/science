@@ -1,7 +1,7 @@
 import { handleActions } from "redux-actions";
 
 import { getTokenFromStorage } from "../utils";
-import { logInSuccess } from "../actions";
+import { logInSuccess, logOutSuccess } from "../actions";
 
 const token = getTokenFromStorage();
 
@@ -13,6 +13,9 @@ export const auth = handleActions(
   {
     [logInSuccess](state, { payload }) {
       return { ...state, token: payload };
+    },
+    [logOutSuccess](state) {
+      return { ...state, token: '' };
     }
   },
   initialState
