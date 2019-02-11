@@ -13,6 +13,8 @@ const initialState = {
     if (index % 2 === 0) content = articlesContent[0];
     else if (index % 3 === 0) content = articlesContent[1];
     else if (index % 5 === 0) content = articlesContent[2];
+    else if (index % 7 === 0) content = articlesContent[3];
+    else if (index % 11 === 0) content = articlesContent[4];
     else content = article.content;
 
     return {
