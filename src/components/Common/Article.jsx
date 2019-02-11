@@ -166,5 +166,3 @@ ArticleComponent.propTypes = {
 };
 
 export const Article = withStyles(styles)(ArticleComponent);
-
-

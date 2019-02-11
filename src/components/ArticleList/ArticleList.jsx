@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { AppBar, Typography, TextField, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import { Filter, Article, Pagination } from "../Common";
 
@@ -106,7 +106,10 @@ class ArticlesListComponent extends Component {
 
     const indexOfLastOrder = page * articlesPerPage;
     const indexOfFirstOrder = indexOfLastOrder - articlesPerPage;
-    const currentArticles = this.filterArticles().slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentArticles = this.filterArticles().slice(
+      indexOfFirstOrder,
+      indexOfLastOrder
+    );
 
     return (
       <div>
@@ -195,12 +198,14 @@ class ArticlesListComponent extends Component {
             })}
           </div>
 
-          <Pagination  
+          <Pagination
             articles={this.filterArticles()}
             articlesPerPage={articlesPerPage}
             page={page}
             setPage={page => this.setState({ page })}
-            onChangeArticlesPerPage={e => this.setState({ articlesPerPage: e.target.value })}
+            onChangeArticlesPerPage={e =>
+              this.setState({ articlesPerPage: e.target.value, page: 1 })
+            }
           />
         </div>
       </div>
@@ -284,7 +289,7 @@ const styles = theme => ({
 
 ArticlesListComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  admin: PropTypes.bool.isRequired,
+  admin: PropTypes.bool.isRequired
 };
 
 const ArticleList = withStyles(styles)(ArticlesListComponent);
