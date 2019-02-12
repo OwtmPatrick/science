@@ -15,4 +15,4 @@ export const FILTER2 = [
 
 export const FILTER3 = ["All audiences", "Physics", "Chemists"];
 
-export const ARTICLES_PER_PAGE = [3, 5, 9, 36];
+export const ARTICLES_PER_PAGE = [3, 9, 36];

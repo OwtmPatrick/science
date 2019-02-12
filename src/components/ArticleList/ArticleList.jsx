@@ -99,7 +99,7 @@ class ArticlesListComponent extends Component {
   };
 
   render() {
-    const { classes, admin } = this.props;
+    const { classes, admin, errorSetPage, openModal, closeModal } = this.props;
     const { page, articlesPerPage } = this.state;
 
     const newArticleId = generateID();
@@ -206,6 +206,9 @@ class ArticlesListComponent extends Component {
             onChangeArticlesPerPage={e =>
               this.setState({ articlesPerPage: e.target.value, page: 1 })
             }
+            errorSetPage={errorSetPage}
+            openModal={openModal}
+            closeModal={closeModal}
           />
         </div>
       </div>
@@ -289,7 +292,10 @@ const styles = theme => ({
 
 ArticlesListComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  admin: PropTypes.bool.isRequired
+  admin: PropTypes.bool.isRequired,
+  errorSetPage: PropTypes.bool.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
 const ArticleList = withStyles(styles)(ArticlesListComponent);

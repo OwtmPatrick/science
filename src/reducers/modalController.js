@@ -6,7 +6,9 @@ import {
   AUTH_ERROR,
   CONFIRM_EXIT,
   // articles
-  CONFIRM_DELETE_ARTICLE
+  CONFIRM_DELETE_ARTICLE,
+  // pagination
+  ERROR_SET_PAGE
 } from "../constants";
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
   [CONFIRM_EXIT]: false,
   // articles
   [CONFIRM_DELETE_ARTICLE]: false,
+  [ERROR_SET_PAGE]: false,
   data: {}
 };
 
