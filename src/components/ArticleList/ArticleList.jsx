@@ -64,35 +64,16 @@ class ArticlesListComponent extends Component {
     } = this.state;
 
     if (filterText.length) {
-      // articles = articles.filter(article => {
-      //   const handleSearch = filterText;
+      const filterWords = filterText.split(" ").filter(item => item.length);
 
-      //   return (
-      //     article.title.toLowerCase().indexOf(handleSearch) !== -1 ||
-      //     article.content.toLowerCase().indexOf(handleSearch) !== -1
-      //   );
-      // });
-
-      const result  = filterText.split(' ').reduce((res, article) => {
-        // if (article.length) {
-          console.log(res);
-        const filterTitleArticles = articles.filter(article => (
-          article.title.toLowerCase().indexOf(filterText) !== -1
-        ));
-
-        const filterContentArticles = articles.filter(article => (
-          article.content.toLowerCase().indexOf(filterText) !== -1
-        ));
-
-        const filterSpecialityArticles = articles.filter(article => (
-          article.speciality.toLowerCase().indexOf(filterText) !== -1
-        ));
-          return res.concat(filterTitleArticles, filterContentArticles, filterSpecialityArticles);
-        // }
-      }, []);
-
-      console.log(result.length);
-
+      const result = articles.filter(article =>
+        filterWords.some(
+          word =>
+            article.title.toLowerCase().indexOf(word) !== -1 ||
+            article.content.toLowerCase().indexOf(word) !== -1 ||
+            article.speciality.toLowerCase().indexOf(word) !== -1
+        )
+      );
       return result;
     }
     if (filterSpeciality !== "all specialities") {
