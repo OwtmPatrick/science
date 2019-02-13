@@ -65,7 +65,12 @@ class ArticleComponent extends Component {
 
           <Typography className={classes.articleTitle}>{title}</Typography>
 
-          <Typography className={classes.articleContent}>{content}</Typography>
+          <Typography className={classes.articleContent}>
+            {content.length > 123 
+              ? `${content.substr(0, 123)} ...`
+              : content
+            }
+          </Typography>
         </CardContent>
 
         {this.state.videoOpen && video ? (

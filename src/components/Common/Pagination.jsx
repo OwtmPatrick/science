@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   FormControl,
   Select,
-  OutlinedInput,
   MenuItem,
   Fab,
   IconButton,
@@ -11,11 +10,10 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-  Button
+  Button,
+  Paper
 } from "@material-ui/core";
 import {
-  FirstPage,
-  LastPage,
   KeyboardArrowLeft,
   KeyboardArrowRight
 } from "@material-ui/icons";
@@ -29,29 +27,33 @@ class PagiantionComponent extends Component {
     pageNumber: ""
   };
 
+  goToPage = () => {
+    const { pageNumber } = this.state;
+    const { articles, articlesPerPage, setPage, openModal } = this.props;
+    const allPages = [];
+
+    for (let i = 1; i <= Math.ceil(articles.length / articlesPerPage); i++) {
+      allPages.push(i);
+    }
+
+    if (!pageNumber) return;
+
+    if (pageNumber.match(/^[0-9]*$/gm) && pageNumber !== "0") {
+      if (Number(pageNumber) <= allPages.length) {
+        setPage(Number(pageNumber));
+      } else setPage(allPages[allPages.length - 1]);
+
+      this.setState({ pageNumber: "" });
+      return;
+    } else {
+      this.setState({ pageNumber: "" });
+      openModal(ERROR_SET_PAGE);
+    }
+  }
+
   setPage = e => {
     if (e.key === "Enter") {
-      const { pageNumber } = this.state;
-      const { articles, articlesPerPage, setPage, openModal } = this.props;
-      const allPages = [];
-
-      for (let i = 1; i <= Math.ceil(articles.length / articlesPerPage); i++) {
-        allPages.push(i);
-      }
-
-      if (!pageNumber) return;
-
-      if (pageNumber.match(/^[0-9]*$/gm) && pageNumber !== "0") {
-        if (Number(pageNumber) <= allPages.length) {
-          setPage(Number(pageNumber));
-        } else setPage(allPages[allPages.length - 1]);
-
-        this.setState({ pageNumber: "" });
-        return;
-      } else {
-        this.setState({ pageNumber: "" });
-        openModal(ERROR_SET_PAGE);
-      }
+      this.goToPage();
     }
   };
 
@@ -99,24 +101,18 @@ class PagiantionComponent extends Component {
       <div className={classes.container}>
         <div className={classes.articlesPerPage}>
           <Typography
-            variant="h6"
+            variant="subtitle2"
             color="primary"
-            className={classes.typography}
+            className={classes.showBy}
           >
-            Show by
+            Show by:
           </Typography>
 
           <FormControl variant="outlined">
             <Select
               value={articlesPerPage}
               onChange={onChangeArticlesPerPage}
-              input={
-                <OutlinedInput
-                  labelWidth={0}
-                  name="articlesPerPage"
-                  id="articlesPerPage-select"
-                />
-              }
+              className={classes.select}
             >
               {ARTICLES_PER_PAGE.map(option => (
                 <MenuItem value={option} key={option}>
@@ -129,15 +125,21 @@ class PagiantionComponent extends Component {
 
         {allPages.length > 1 && (
           <div className={classes.navigation}>
-            <IconButton
+            <Button
+              color='primary'
+              variant='outlined'
               onClick={() => setPage(1)}
               disabled={page === 1}
-              className={classes.extremeButton}
             >
-              <FirstPage />
-            </IconButton>
+              first
+            </Button>
 
-            <IconButton onClick={() => setPage(page - 1)} disabled={page === 1}>
+            <IconButton 
+              size='small'
+              onClick={() => setPage(page - 1)} 
+              disabled={page === 1}
+              className={classes.prevButton}
+            >
               <KeyboardArrowLeft />
             </IconButton>
 
@@ -160,6 +162,7 @@ class PagiantionComponent extends Component {
             </div>
 
             <IconButton
+              size='small'
               onClick={() => setPage(page + 1)}
               disabled={page === lastPage}
               className={classes.nextButton}
@@ -167,24 +170,44 @@ class PagiantionComponent extends Component {
               <KeyboardArrowRight />
             </IconButton>
 
-            <IconButton
+            <Button
+              color='primary'
+              variant='outlined'
               onClick={() => setPage(lastPage)}
               disabled={page === lastPage}
-              className={classes.extremeButton}
             >
-              <LastPage />
-            </IconButton>
+              last
+            </Button>
           </div>
         )}
 
         {allPages.length > 1 && (
-          <TextField
-            variant="outlined"
-            value={this.state.pageNumber}
-            onChange={e => this.setState({ pageNumber: e.target.value })}
-            onKeyPress={this.setPage}
-            className={classes.searchPage}
-          />
+          <div className={classes.pageInfo}>
+            <Paper className={classes.paper}>
+              <Typography variant='subtitle1' className={classes.select}>
+                {`Page ${page} of ${allPages.length}`}
+              </Typography>
+            </Paper>
+
+            <div className={classes.goToPage}>
+              <Typography variant='subtitle2' className={classes.select}>Go to</Typography>
+
+              <TextField
+                value={this.state.pageNumber}
+                onChange={e => this.setState({ pageNumber: e.target.value })}
+                onKeyPress={this.setPage}
+                className={classes.searchPage}
+              />
+
+              <Button
+                color='primary'
+                variant='outlined'
+                onClick={this.goToPage}
+              >
+              go
+            </Button>
+            </div>
+          </div>
         )}
 
         <Dialog open={errorSetPage} onClose={() => closeModal(ERROR_SET_PAGE)}>
@@ -210,32 +233,36 @@ const styles = theme => ({
     flexDirection: "column",
     alignItems: "center",
     margin: 20,
-    "@media (min-width: 768px)": {
-      flexDirection: "row"
+    "@media (min-width: 900px)": {
+      flexDirection: "row",
+      width: '100%',
+      padding: '0 15px'
     }
+  },
+  showBy: {
+    width: 60
+  },
+  select: {
+    color: theme.palette.primary.dark
   },
   articlesPerPage: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
-    "@media (min-width: 768px)": {
+    "@media (min-width: 900px)": {
       marginBottom: 0,
-      marginRight: 20
     }
-  },
-  typography: {
-    marginRight: 20
   },
   navigation: {
     width: "100%",
-    "@media (min-width: 425px)": {
+    "@media (min-width: 500px)": {
       display: "flex",
       alignItems: "center"
     },
-    "@media (min-width: 768px)": {
-      width: "auto"
-    }
+    "@media (min-width: 900px)": {
+      margin: "0 10px"
+    },
   },
   pagesNumbers: {
     position: "absolute",
@@ -244,9 +271,12 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    "@media (min-width: 425px)": {
+    marginTop: 15,
+    "@media (min-width: 500px)": {
       position: "static",
-      display: "inline-block"
+      display: "inline-block",
+      width: 'auto',
+      margin: 0
     }
   },
   fab: {
@@ -259,22 +289,51 @@ const styles = theme => ({
     fontSize: 16,
     marginRight: 7
   },
-  nextButton: {
-    marginLeft: -7
+  pageInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 80,
+    "@media (min-width: 500px)": {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+      marginTop: 20,
+      "@media (min-width: 900px)": {
+        width: '60%',
+        margin: 0
+      }
+    }
   },
-  extremeButton: {
-    padding: 0
+  paper: {
+    padding: '5px 10px',
+  },
+  goToPage: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 140,
+    marginTop: 20,
+    "@media (min-width: 500px)": {
+      flexDirection: 'row',
+      width: 160,
+      height: 'auto',
+      marginTop: 0,
+    },
+   
+  },
+  prevButton: {
+    padding: 5,
+    margin: '0 5px'
+  },
+  nextButton: {
+    padding: 5,
+    margin: '0 5px',
+    marginLeft: -3
   },
   searchPage: {
-    width: 85,
-    marginTop: 60,
-    "@media (min-width: 425px)": {
-      marginTop: 20
-    },
-    "@media (min-width: 768px)": {
-      marginTop: 0,
-      marginLeft: 10
-    }
+    width: 50
   }
 });
 
