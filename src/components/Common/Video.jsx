@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 const VideoComponent = ({ videoSrc, classes }) => {
   const screenWidth = window.innerWidth;
+  console.log('screenWidth: ', screenWidth);
   return (
     <Paper>
       <div className={classes.popup} />

@@ -232,7 +232,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    margin: 20,
+    margin: "20px 10px",
     "@media (min-width: 900px)": {
       flexDirection: "row",
       width: '100%',
@@ -246,12 +246,10 @@ const styles = theme => ({
     color: theme.palette.primary.dark
   },
   articlesPerPage: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     marginBottom: 20,
     "@media (min-width: 900px)": {
       marginBottom: 0,
+      marginRight: 25
     }
   },
   navigation: {
@@ -298,12 +296,12 @@ const styles = theme => ({
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: '100%',
-      marginTop: 20,
-      "@media (min-width: 900px)": {
+      marginTop: 20
+    },
+    "@media (min-width: 900px)": {
         width: '60%',
         margin: 0
       }
-    }
   },
   paper: {
     padding: '5px 10px',

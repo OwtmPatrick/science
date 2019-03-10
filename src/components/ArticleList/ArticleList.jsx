@@ -64,18 +64,7 @@ class ArticlesListComponent extends Component {
     } = this.state;
 
     if (filterText.length) {
-      // articles = articles.filter(article => {
-      //   const handleSearch = filterText;
-
-      //   return (
-      //     article.title.toLowerCase().indexOf(handleSearch) !== -1 ||
-      //     article.content.toLowerCase().indexOf(handleSearch) !== -1
-      //   );
-      // });
-
       const result  = filterText.split(' ').reduce((res, article) => {
-        // if (article.length) {
-          console.log(res);
         const filterTitleArticles = articles.filter(article => (
           article.title.toLowerCase().indexOf(filterText) !== -1
         ));
@@ -88,11 +77,7 @@ class ArticlesListComponent extends Component {
           article.speciality.toLowerCase().indexOf(filterText) !== -1
         ));
           return res.concat(filterTitleArticles, filterContentArticles, filterSpecialityArticles);
-        // }
       }, []);
-
-      console.log(result.length);
-
       return result;
     }
     if (filterSpeciality !== "all specialities") {
@@ -303,9 +288,11 @@ const styles = theme => ({
   },
   articlesList: {
     width: "100%",
-    display: "flex",
-    flexDirection: "column",
+    // display: "flex",
+    // flexDirection: "column",
+    height: '100%',
     "@media (min-width: 1024px)": {
+      display: "flex",
       flexDirection: "row",
       flexWrap: "wrap"
     }
@@ -314,7 +301,6 @@ const styles = theme => ({
 
 ArticlesListComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  admin: PropTypes.bool.isRequired,
   errorSetPage: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired

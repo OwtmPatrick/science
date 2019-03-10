@@ -56,6 +56,8 @@ class ArticleComponent extends Component {
             className={video ? classes.articleVideo : classes.articleImage}
             src={this.getImage(image)}
             alt=""
+            // width="900"
+            // height="600"
           />
           {video ? <Avatar className={classes.play} src={play} /> : null}
         </div>
@@ -100,30 +102,30 @@ const styles = theme => ({
     display: "flex",
     margin: "20px 10px 0",
     flexBasis: "31%",
-    flex: "1 1 calc(30% - 7.5px)",
     flexDirection: "column"
   },
   arcticleAdmin: {
     display: "flex",
     margin: "20px 10px 0",
     flexBasis: "31%",
-    flex: "1 1 calc(30% - 7.5px)",
     flexDirection: "column",
     position: "relative",
     paddingBottom: 30
   },
   imageContainer: {
-    position: "relative"
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    "@media (min-width: 1024px)": {
+      height: 200
+    }
   },
   articleImage: {
-    objectFit: "cover",
     width: "100%",
     height: "100%"
   },
   articleVideo: {
-    objectFit: "cover",
     width: "100%",
-    height: "100%",
     cursor: "pointer"
   },
   play: {
@@ -167,7 +169,6 @@ ArticleComponent.propTypes = {
   content: PropTypes.string.isRequired,
   section: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  admin: PropTypes.bool.isRequired
 };
 
 export const Article = withStyles(styles)(ArticleComponent);
