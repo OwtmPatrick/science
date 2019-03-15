@@ -65,29 +65,6 @@ class LogIn extends Component {
           <TextField
             type="password"
             label="Password"
-            const styles = {
-              container: {
-                height: "100vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-              },
-              paper: {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: 30
-              },
-              button: {
-                maxWidth: 150,
-                marginTop: 15
-              }
-            };
-            
-            LogIn.propTypes = {
-              classes: PropTypes.object.isRequired,
-              token: PropTypes.string.isRequired,
-              modalAuthError: PropTypes.bool.isRequired,
             name="login"
             margin="normal"
             variant="outlined"
