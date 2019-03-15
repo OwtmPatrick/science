@@ -45,10 +45,10 @@ class LogIn extends Component {
   };
 
   render() {
-  const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <div className={classes.container}>
         <Paper className={classes.paper}>
           <TextField
             label="Name"
@@ -65,6 +65,29 @@ class LogIn extends Component {
           <TextField
             type="password"
             label="Password"
+            const styles = {
+              container: {
+                height: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              },
+              paper: {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: 30
+              },
+              button: {
+                maxWidth: 150,
+                marginTop: 15
+              }
+            };
+            
+            LogIn.propTypes = {
+              classes: PropTypes.object.isRequired,
+              token: PropTypes.string.isRequired,
+              modalAuthError: PropTypes.bool.isRequired,
             name="login"
             margin="normal"
             variant="outlined"
@@ -100,18 +123,22 @@ class LogIn extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
 const styles = {
+  container: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
   paper: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    maxWidth: 310,
-    margin: "150px auto 10px",
     padding: 30
   },
   button: {
@@ -125,9 +152,9 @@ LogIn.propTypes = {
   token: PropTypes.string.isRequired,
   modalAuthError: PropTypes.bool.isRequired,
   logIn: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired
 };
 
-const LoginComponent = withStyles(styles)(LogIn)
+const LoginComponent = withStyles(styles)(LogIn);
 
 export default LoginComponent;
