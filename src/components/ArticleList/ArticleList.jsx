@@ -64,20 +64,17 @@ class ArticlesListComponent extends Component {
     } = this.state;
 
     if (filterText.length) {
-      const result  = filterText.split(' ').reduce((res, article) => {
-        const filterTitleArticles = articles.filter(article => (
-          article.title.toLowerCase().indexOf(filterText) !== -1
-        ));
+      const filterWords = filterText.split(" ").filter(item => item.length);
 
-        const filterContentArticles = articles.filter(article => (
-          article.content.toLowerCase().indexOf(filterText) !== -1
-        ));
+      const result = articles.filter(article =>
+        filterWords.some(
+          word =>
+            article.title.toLowerCase().indexOf(word) !== -1 ||
+            article.content.toLowerCase().indexOf(word) !== -1 ||
+            article.speciality.toLowerCase().indexOf(word) !== -1
+        )
+      );
 
-        const filterSpecialityArticles = articles.filter(article => (
-          article.speciality.toLowerCase().indexOf(filterText) !== -1
-        ));
-          return res.concat(filterTitleArticles, filterContentArticles, filterSpecialityArticles);
-      }, []);
       return result;
     }
     if (filterSpeciality !== "all specialities") {
